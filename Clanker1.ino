@@ -31,6 +31,7 @@ void setup() {
 
 void loop() { 
  Claw();
+ Line();
 }
 
 void Claw(){
@@ -55,7 +56,7 @@ void Claw(){
   digitalWrite(trigPin, LOW);
   long duration = pulseIn(echoPin, HIGH);
   int distance = duration * 0.034 / 2;
-  Serial.println(distance);
+  //Serial.println(distance);
   }
 }
 
@@ -65,7 +66,6 @@ void Line(){
   // print the sensor values as numbers from 0 to 1023, where 0 means maximum
   // reflectance and 1023 means minimum reflectance
   for (uint8_t i = 0; i < SensorCount; i++)
-
   {
     Serial.print(sensorValues[i]);
     Serial.print('\t');
@@ -75,3 +75,24 @@ void Line(){
   delay(250);
 
 }
+void Clench(){
+
+  if (distance == 5){
+    
+    if(millis() - p_time > 250){
+    p_time = millis();
+    myservo.write(95);
+    myservo1.write(88);
+    }
+  }
+  else
+  {
+  
+   if(millis() - p_time > 250){
+   p_time = millis();
+   myservo.write(95);
+   myservo1.write(88);
+    }
+  }
+}
+
