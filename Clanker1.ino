@@ -90,8 +90,8 @@ void Clench(){
   
    if(millis() - p_time > 250){
    p_time = millis();
-   myservo.write(95);
-   myservo1.write(88);
+   myservo.write(180);
+   myservo1.write(0);
     }
   }
 }
