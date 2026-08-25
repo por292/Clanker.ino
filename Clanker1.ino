@@ -17,19 +17,9 @@ uint16_t sensorValues[SensorCount];
 
 void setup() {
 
-  for (uint16_t i = 0; i < 400; i++) // calabrate by moving accros a dark line
-  {
-    qtrA.calibrate();
-  }
-  for (uint8_t i = 0; i < SensorCount; i++)
-  {
-    Serial.print(qtrA.calibrationOn.maximum[i]);
-
-    Serial.print(' ');
-  }
+  
   myservo.attach(9);
   myservo1.attach(10);
-  //qtr.setTypeAnalog();
   qtrA.setTypeRC();
 
   pinMode(trigPin, OUTPUT);
@@ -48,17 +38,6 @@ void loop() {
 }
 
 void Claw(){
- /* if(millis() - p_time > 250){ //Custom delay so everthing can work in sync
-  p_time = millis();
-  myservo.write(180);
-  myservo1.write(0);
-  }*/
-
-  /*if(millis() - p_time > 250){
-  p_time = millis();
-  myservo.write(95);
-  myservo1.write(88);
-  }*/
 
   if(millis() - p_time > 250){
   p_time = millis();
@@ -79,36 +58,34 @@ if (millis() - t_time > 250){
   t_time = millis();
   qtrA.read(sensorValues);
 }
- //qtr.read(sensorValues);
   // print the sensor values as numbers from 0 to 1023, where 0 means maximum
   // reflectance and 1023 means minimum reflectance
   for (uint8_t i = 0; i < SensorCount; i++)
   {
-    Serial.print(sensorValues[i]);
-    Serial.print('\t');
+    //Serial.print(sensorValues[i]);
+    //Serial.print('\t');
   }
-  Serial.println();
+ // Serial.println();
 
   delay(250);
 
 }
 void Clench(){
 
-  if (distance <= 7){
-    
-    if(millis() - c_time > 250){
-    c_time = millis();
-    myservo.write(180);
-    myservo1.write(0);
-    }
+  if (distance >= 7){
+    //if(millis() - c_time > 250){
+    //c_time = millis();
+    myservo.write(90);
+    myservo1.write(90);
+   // }
   }
-  else if (distance >=7)
+  else //if (distance <=7)
   {
   
-   if(millis() - c_time > 250){
-   c_time = millis();
-   myservo.write(90);
-   myservo1.write(80);
-    }
+   //if(millis() - c_time > 250){
+  //c_time = millis();
+   myservo.write(180);
+   myservo1.write(0);
+   // }
   }
 }
