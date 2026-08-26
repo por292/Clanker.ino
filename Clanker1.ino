@@ -52,9 +52,9 @@ void setup() {
 
 void loop() { 
  Claw();
- Line();
+ //Line();
  Clench();
- colour();
+ //colour();
 }
 
 void Claw(){
@@ -67,7 +67,7 @@ void Claw(){
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
   long duration = pulseIn(echoPin, HIGH);
-  int distance = duration * 0.034 / 2;
+  distance = duration * 0.034 / 2;
   //Serial.println(distance);
   }
 }
@@ -92,24 +92,18 @@ if (millis() - t_time > 250){
 }
 void Clench(){
 
-  if (distance >= 7){
-    //if(millis() - c_time > 250){
-    //c_time = millis();
+  if (distance <= 7){
     delay(250);
     myservo.write(90);
     myservo1.write(90);
     delay(250);
-   // }
   }
-  else //if (distance <=7)
+  else 
   {
-   //if(millis() - c_time > 250){
-  //c_time = millis();
    delay(250);
    myservo.write(180);
    myservo1.write(0);
    delay(250);
-   // }
   }
 }
 void colour()
@@ -148,9 +142,11 @@ void colour()
 
 void Wheels()
 {
-  colour();
-  if(color() = R)
-  {
+  //colour();
+  //if(color() = R)
+  //{
 
+ //}
+}
   }
 }
