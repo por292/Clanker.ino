@@ -5,10 +5,19 @@ Servo myservo;  // create servo object to control a servo
 Servo myservo1;
 QTRSensors qtrA;
 
+#define S0 3
+#define S1 4
+#define S2 7
+#define S3 6
+#define sensorOut 8
+#define OE 5
+int frequency = 0;
+
+
 const int echoPin = (12);
 const int trigPin = (11);
 int duration, distance;
-unsigned long c_time;// = millis();
+unsigned long c_time;
 unsigned long p_time;
 unsigned long t_time;
 
@@ -17,7 +26,17 @@ uint16_t sensorValues[SensorCount];
 
 void setup() {
 
-  
+  pinMode(S0, OUTPUT);
+  pinMode(S1, OUTPUT);
+  pinMode(S2, OUTPUT);
+  pinMode(S3, OUTPUT);
+  pinMode(OE, OUTPUT);
+  pinMode(sensorOut, INPUT);
+
+  digitalWrite(S0,HIGH);
+  digitalWrite(S1,LOW);
+  digitalWrite(OE, LOW);
+
   myservo.attach(9);
   myservo1.attach(10);
   qtrA.setTypeRC();
@@ -35,6 +54,7 @@ void loop() {
  Claw();
  Line();
  Clench();
+ colour();
 }
 
 void Claw(){
@@ -75,17 +95,62 @@ void Clench(){
   if (distance >= 7){
     //if(millis() - c_time > 250){
     //c_time = millis();
+    delay(250);
     myservo.write(90);
     myservo1.write(90);
+    delay(250);
    // }
   }
   else //if (distance <=7)
   {
-  
    //if(millis() - c_time > 250){
   //c_time = millis();
+   delay(250);
    myservo.write(180);
    myservo1.write(0);
+   delay(250);
    // }
+  }
+}
+void colour()
+{
+   // Setting red filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,LOW);
+  // Reading the output frequency
+  frequency = pulseIn(sensorOut, LOW);
+  // Printing the value on the serial monitor
+  Serial.print("R= ");//printing name
+  Serial.print(frequency);//printing RED color frequency
+  Serial.print("  ");
+  delay(100);
+  // Setting Green filtered photodiodes to be read
+  digitalWrite(S2,HIGH);
+  digitalWrite(S3,HIGH);
+  // Reading the output frequency
+  frequency = pulseIn(sensorOut, LOW);
+  // Printing the value on the serial monitor
+  Serial.print("G= ");//printing name
+  Serial.print(frequency);//printing Green color frequency
+  Serial.print("  ");
+  delay(100);
+  // Setting Blue filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,HIGH); 
+// Reading the output frequency
+  frequency = pulseIn(sensorOut, LOW);
+  // Printing the value on the serial monitor
+  Serial.print("B= ");//printing name
+  Serial.print(frequency);//printing Blue color frequency
+  Serial.println("  ");
+  delay(1000);
+}
+
+void Wheels()
+{
+  colour();
+  if(color() = R)
+  {
+
   }
 }
