@@ -26,6 +26,8 @@ uint16_t sensorValues[SensorCount];
 
 void setup() {
 
+ 
+
   pinMode(S0, OUTPUT);
   pinMode(S1, OUTPUT);
   pinMode(S2, OUTPUT);
@@ -52,7 +54,7 @@ void setup() {
 
 void loop() { 
  Claw();
- //Line();
+ Line();
  Clench();
  //colour();
 }
@@ -78,14 +80,14 @@ if (millis() - t_time > 250){
   t_time = millis();
   qtrA.read(sensorValues);
 }
-  // print the sensor values as numbers from 0 to 1023, where 0 means maximum
-  // reflectance and 1023 means minimum reflectance
+  //print the sensor values as numbers from 0 to 1023, where 0 means maximum
+  //reflectance and 1023 means minimum reflectance
   for (uint8_t i = 0; i < SensorCount; i++)
   {
     //Serial.print(sensorValues[i]);
     //Serial.print('\t');
   }
- // Serial.println();
+  //Serial.println();
 
   delay(250);
 
@@ -148,5 +150,4 @@ void Wheels()
 
  //}
 }
-  }
 }
