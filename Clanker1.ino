@@ -13,9 +13,9 @@ QTRSensors qtrA;
 #define OE 5
 
 
-int green[] = {47, 40, 55};
+int white[] = {20, 20, 20};
 //int blue [] = {0, 0, 255}
-bool greenFlag[] = {false, false, false};
+bool whiteFlag[] = {false, false, false};
 //bool blueFlag[] = {false, false, false}
 int frequency = 0;
 int difference = 0;
@@ -27,6 +27,11 @@ int duration, distance;
 unsigned long c_time;
 unsigned long p_time;
 unsigned long t_time;
+
+const int In1 = A4;
+const int In2 = A5;
+const int In3 = 2;
+const int In4 = 13;
 
 const uint8_t SensorCount = 4;
 uint16_t sensorValues[SensorCount];
@@ -55,6 +60,12 @@ void setup() {
 
   qtrA.setSensorPins((const uint8_t[]){A0, A1, A2, A3}, SensorCount);
 
+  pinMode(In1, OUTPUT);
+  pinMode(In2, OUTPUT);
+  pinMode(In3, OUTPUT);
+  pinMode(In4, OUTPUT);
+
+
   Serial.begin(9600);
 
 }
@@ -64,6 +75,7 @@ void loop() {
  Line();
  Clench();
  colour();
+ Wheels();
 }
 
 void Claw(){
@@ -105,14 +117,14 @@ void Clench(){
     delay(250);
     myservo.write(90);
     myservo1.write(90);
-    delay(250);
+    
   }
   else 
   {
    delay(250);
    myservo.write(180);
    myservo1.write(0);
-   delay(250);
+   
   }
 }
 void colour()
@@ -123,9 +135,9 @@ void colour()
 
   // Reading the output frequency
   frequency = pulseIn(sensorOut, LOW);
-  difference = frequency - green[0];
-  if(abs(difference)<10){
-    greenFlag[0] = true;
+  difference = frequency - white[0];
+  if(abs(difference)<15){
+    whiteFlag[0] = true;
   }
   delay(100);
 
@@ -135,9 +147,9 @@ void colour()
 
   // Reading the output frequency
   frequency = pulseIn(sensorOut, LOW);
-  difference = frequency - green[1];
-  if(abs(difference)<10){
-    greenFlag[1] = true;
+  difference = frequency - white[1];
+  if(abs(difference)<15){
+    whiteFlag[1] = true;
   } 
   delay(100);
 
@@ -147,17 +159,17 @@ void colour()
 
   // Reading the output frequency
   frequency = pulseIn(sensorOut, LOW);
-  difference = frequency - green[2];
-  if(abs(difference)<10){
-    greenFlag[2] = true;
+  difference = frequency - white[2];
+  if(abs(difference)<15){
+    whiteFlag[2] = true;
   }
-  if (greenFlag[0] && greenFlag[1] && greenFlag[2]){
-    Serial.println("It is green");
+  if (whiteFlag[0] && whiteFlag[1] && whiteFlag[2]){
+    Serial.println("It is white");
   }else{
     Serial.println("UNKOWN");
   }
-  greenFlag[0] = false; greenFlag[1] = false; greenFlag[2] = false;
-  delay(1000);
+  whiteFlag[0] = false; whiteFlag[1] = false; whiteFlag[2] = false;
+  delay(250);
    
    // Setting red filtered photodiodes to be read
   digitalWrite(S2,LOW);
@@ -196,13 +208,33 @@ void colour()
   Serial.print("B= ");//printing name
   Serial.print(frequency);//printing Blue color frequency
   Serial.println("  ");
-  delay(1000);
+  delay(250);
 }
 
 void Wheels()
 {
-
-}
-
-}
+  if (whiteFlag == false){
+  digitalWrite(In1, HIGH);
+  digitalWrite(In2, LOW);
+  digitalWrite(In3, LOW);
+  digitalWrite(In4, LOW);
+  }
+  else{
+  digitalWrite(In1, HIGH);
+  digitalWrite(In2, LOW);
+  digitalWrite(In3, HIGH);
+  digitalWrite(In4, LOW);
+  }
+  if(whiteFlag == false){
+  digitalWrite(In3, HIGH);
+  digitalWrite(In4, LOW);
+  digitalWrite(In1, LOW);
+  digitalWrite(In2, LOW);
+  }
+  else{
+  digitalWrite(In1, HIGH);
+  digitalWrite(In2, LOW);
+  digitalWrite(In3, HIGH);
+  digitalWrite(In4, LOW);
+  }
 }
