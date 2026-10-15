@@ -14,11 +14,13 @@ QTRSensors qtrA;
 
 
 int white[] = {20, 20, 20};
-//int blue [] = {0, 0, 255}
+int black [] = {129, 170, 170};
 bool whiteFlag[] = {false, false, false};
-//bool blueFlag[] = {false, false, false}
+bool blackFlag[] = {false, false, false};
 int frequency = 0;
 int difference = 0;
+int frequencyB = 0;
+int differenceB = 0;
 
 
 const int echoPin = (12);
@@ -74,8 +76,9 @@ void loop() {
  Claw();
  Line();
  Clench();
- colour();
- Wheels();
+ White();
+ Black();
+ //Wheels();
 }
 
 void Claw(){
@@ -127,7 +130,7 @@ void Clench(){
    
   }
 }
-void colour()
+void White()
 {
    // Setting red filtered photodiodes to be read
   digitalWrite(S2,LOW);
@@ -209,11 +212,98 @@ void colour()
   Serial.print(frequency);//printing Blue color frequency
   Serial.println("  ");
   delay(250);
+  
+}
+
+
+void Black(){
+
+ // Setting red filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,LOW);
+
+  // Reading the output frequency
+  frequencyB = pulseIn(sensorOut, LOW);
+  difference = frequencyB - black[0];
+  if(abs(difference)<15){
+    blackFlag[0] = true;
+  }
+  delay(100);
+
+  // Setting Green filtered photodiodes to be read
+  digitalWrite(S2,HIGH);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyB = pulseIn(sensorOut, LOW);
+  difference = frequencyB - black[1];
+  if(abs(difference)<15){
+    blackFlag[1] = true;
+  } 
+  delay(100);
+
+  // Setting Blue filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyB = pulseIn(sensorOut, LOW);
+  difference = frequencyB - black[2];
+  if(abs(difference)<15){
+    blackFlag[2] = true;
+  }
+  if (blackFlag[0] && blackFlag[1] && blackFlag[2]){
+    Serial.println("It is black");
+  }else{
+    Serial.println("UNKOWN");
+  }
+  blackFlag[0] = false; blackFlag[1] = false; blackFlag[2] = false;
+  delay(250);
+   
+   // Setting red filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,LOW);
+
+  // Reading the output frequency
+  frequencyB = pulseIn(sensorOut, LOW);
+
+  // Printing the value on the serial monitor
+  Serial.print("R= ");//printing name
+  Serial.print(frequencyB);//printing RED color frequency
+  Serial.print("  ");
+  delay(100);
+
+  // Setting Green filtered photodiodes to be read
+  digitalWrite(S2,HIGH);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyB = pulseIn(sensorOut, LOW);
+
+  // Printing the value on the serial monitor
+  Serial.print("G= ");//printing name
+  Serial.print(frequencyB);//printing Green color frequency
+  Serial.print("  ");
+  delay(100);
+
+  // Setting Blue filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyB = pulseIn(sensorOut, LOW);
+
+  // Printing the value on the serial monitor
+  Serial.print("B= ");//printing name
+  Serial.print(frequencyB);//printing Blue color frequency
+  Serial.println("  ");
+  delay(250);
+
 }
 
 void Wheels()
 {
-  if (whiteFlag == false){
+  if (whiteFlag || blackFlag == false){
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
   digitalWrite(In3, LOW);
@@ -225,7 +315,7 @@ void Wheels()
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
   }
-  if(whiteFlag == false){
+  if(whiteFlag || blackFlag == false){
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
   digitalWrite(In1, LOW);
