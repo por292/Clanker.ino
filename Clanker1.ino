@@ -169,7 +169,7 @@ void White()
   if (whiteFlag[0] && whiteFlag[1] && whiteFlag[2]){
     Serial.println("It is white");
   }else{
-    Serial.println("UNKOWN");
+    Serial.println("UNKNOWN");
   }
   whiteFlag[0] = false; whiteFlag[1] = false; whiteFlag[2] = false;
   delay(250);
@@ -255,7 +255,7 @@ void Black(){
   if (blackFlag[0] && blackFlag[1] && blackFlag[2]){
     Serial.println("It is black");
   }else{
-    Serial.println("UNKOWN");
+    Serial.println("UNKNOWN");
   }
   blackFlag[0] = false; blackFlag[1] = false; blackFlag[2] = false;
   delay(250);
@@ -267,11 +267,6 @@ void Black(){
   // Reading the output frequency
   frequencyB = pulseIn(sensorOut, LOW);
 
-  // Printing the value on the serial monitor
-  Serial.print("R= ");//printing name
-  Serial.print(frequencyB);//printing RED color frequency
-  Serial.print("  ");
-  delay(100);
 
   // Setting Green filtered photodiodes to be read
   digitalWrite(S2,HIGH);
@@ -280,11 +275,6 @@ void Black(){
   // Reading the output frequency
   frequencyB = pulseIn(sensorOut, LOW);
 
-  // Printing the value on the serial monitor
-  Serial.print("G= ");//printing name
-  Serial.print(frequencyB);//printing Green color frequency
-  Serial.print("  ");
-  delay(100);
 
   // Setting Blue filtered photodiodes to be read
   digitalWrite(S2,LOW);
@@ -292,13 +282,10 @@ void Black(){
 
   // Reading the output frequency
   frequencyB = pulseIn(sensorOut, LOW);
+}
 
-  // Printing the value on the serial monitor
-  Serial.print("B= ");//printing name
-  Serial.print(frequencyB);//printing Blue color frequency
-  Serial.println("  ");
-  delay(250);
-
+void DiffColor(){
+  
 }
 
 void Wheels()
@@ -306,7 +293,7 @@ void Wheels()
   if (whiteFlag || blackFlag == false){
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
-  digitalWrite(In3, LOW);
+  digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
   }
   else{
@@ -318,7 +305,7 @@ void Wheels()
   if(whiteFlag || blackFlag == false){
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
-  digitalWrite(In1, LOW);
+  digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
   }
   else{
