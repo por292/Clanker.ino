@@ -12,24 +12,35 @@ QTRSensors qtrA;
 #define sensorOut 8
 #define OE 5
 
-
+//white
 int white[] = {20, 20, 20};
-int black [] = {129, 170, 170};
 bool whiteFlag[] = {false, false, false};
-bool blackFlag[] = {false, false, false};
 int frequency = 0;
 int difference = 0;
+//black
+int black [] = {129, 170, 170};
+bool blackFlag[] = {false, false, false};
 int frequencyB = 0;
 int differenceB = 0;
+//purple
+int purp[] = {0, 0, 0};
+bool purpFlag[] = {false, false, false};
+int frequencyC = 0;
+int differenceC = 0;
+//yellow
+int yellow[] = {0, 0, 0};
+bool yellowFlag[] = {false, false, false};
+int frequencyD = 0;
+int differenceD = 0;
 
-
+//ultrasonic 
 const int echoPin = (12);
 const int trigPin = (11);
 int duration, distance;
 unsigned long c_time;
 unsigned long p_time;
 unsigned long t_time;
-
+//wheels
 const int In1 = A4;
 const int In2 = A5;
 const int In3 = 2;
@@ -79,6 +90,8 @@ void loop() {
  White();
  Black();
  //Wheels();
+ Purple();
+ Yellow();
 }
 
 void Claw(){
@@ -92,7 +105,6 @@ void Claw(){
   digitalWrite(trigPin, LOW);
   long duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
-  //Serial.println(distance);
   }
 }
 
@@ -284,32 +296,162 @@ void Black(){
   frequencyB = pulseIn(sensorOut, LOW);
 }
 
-void DiffColor(){
-  
+void Purple(){
+   // Setting red filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,LOW);
+
+  // Reading the output frequency
+  frequencyC = pulseIn(sensorOut, LOW);
+  difference = frequencyC - purp[0];
+  if(abs(difference)<15){
+    purpFlag[0] = true;
+  }
+  delay(100);
+
+  // Setting Green filtered photodiodes to be read
+  digitalWrite(S2,HIGH);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyC = pulseIn(sensorOut, LOW);
+  difference = frequencyC - purp[1];
+  if(abs(difference)<15){
+    purpFlag[1] = true;
+  } 
+  delay(100);
+
+  // Setting Blue filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyC = pulseIn(sensorOut, LOW);
+  difference = frequencyC - purp[2];
+  if(abs(difference)<15){
+    purpFlag[2] = true;
+  }
+  if (purpFlag[0] && purpFlag[1] && purpFlag[2]){
+    Serial.println("It is purple");
+  }else{
+    Serial.println("UNKNOWN");
+  }
+  purpFlag[0] = false; purpFlag[1] = false; purpFlag[2] = false;
+  delay(250);
+   
+   // Setting red filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,LOW);
+
+  // Reading the output frequency
+  frequencyC = pulseIn(sensorOut, LOW);
+
+
+  // Setting Green filtered photodiodes to be read
+  digitalWrite(S2,HIGH);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyC = pulseIn(sensorOut, LOW);
+
+
+  // Setting Blue filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyC = pulseIn(sensorOut, LOW);
+}
+
+void Yellow(){
+   // Setting red filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,LOW);
+
+  // Reading the output frequency
+  frequencyD = pulseIn(sensorOut, LOW);
+  difference = frequencyD - yellow[0];
+  if(abs(difference)<15){
+    yellowFlag[0] = true;
+  }
+  delay(100);
+
+  // Setting Green filtered photodiodes to be read
+  digitalWrite(S2,HIGH);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyD = pulseIn(sensorOut, LOW);
+  difference = frequencyD - yellow[1];
+  if(abs(difference)<15){
+    yellowFlag[1] = true;
+  } 
+  delay(100);
+
+  // Setting Blue filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyD = pulseIn(sensorOut, LOW);
+  difference = frequencyD - yellow[2];
+  if(abs(difference)<15){
+    yellowFlag[2] = true;
+  }
+  if (yellowFlag[0] && yellowFlag[1] && yellowFlag[2]){
+    Serial.println("It is yellow");
+  }else{
+    Serial.println("UNKNOWN");
+  }
+  yellowFlag[0] = false; yellowFlag[1] = false; yellowFlag[2] = false;
+  delay(250);
+   
+   // Setting red filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,LOW);
+
+  // Reading the output frequency
+  frequencyD = pulseIn(sensorOut, LOW);
+
+
+  // Setting Green filtered photodiodes to be read
+  digitalWrite(S2,HIGH);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyD = pulseIn(sensorOut, LOW);
+
+
+  // Setting Blue filtered photodiodes to be read
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,HIGH);
+
+  // Reading the output frequency
+  frequencyD = pulseIn(sensorOut, LOW);
 }
 
 void Wheels()
 {
-  if (whiteFlag || blackFlag == false){
+  if (whiteFlag || blackFlag == true){
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
   }
-  else{
+  else if (purpFlag == true){
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
-  digitalWrite(In3, HIGH);
+  digitalWrite(In3, LOW);
   digitalWrite(In4, LOW);
   }
-  if(whiteFlag || blackFlag == false){
+  if(whiteFlag || blackFlag == true){
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
   }
-  else{
-  digitalWrite(In1, HIGH);
+  else if (yellowFlag == true){
+  digitalWrite(In1, LOW);
   digitalWrite(In2, LOW);
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
