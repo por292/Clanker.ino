@@ -12,6 +12,7 @@ QTRSensors qtrA;
 #define sensorOut 8
 #define OE 5
 
+
 //white
 int white[] = {20, 20, 20};
 bool whiteFlag[] = {false, false, false};
@@ -90,8 +91,8 @@ void loop() {
  White();
  Black();
  //Wheels();
- Purple();
  Yellow();
+ Purple();
 }
 
 void Claw(){
@@ -105,6 +106,7 @@ void Claw(){
   digitalWrite(trigPin, LOW);
   long duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
+  //Serial.println(distance);
   }
 }
 
@@ -332,7 +334,7 @@ void Purple(){
     purpFlag[2] = true;
   }
   if (purpFlag[0] && purpFlag[1] && purpFlag[2]){
-    Serial.println("It is purple");
+    Serial.println("It is Purple");
   }else{
     Serial.println("UNKNOWN");
   }
@@ -364,7 +366,6 @@ void Purple(){
 }
 
 void Yellow(){
-   // Setting red filtered photodiodes to be read
   digitalWrite(S2,LOW);
   digitalWrite(S3,LOW);
 
@@ -399,7 +400,7 @@ void Yellow(){
     yellowFlag[2] = true;
   }
   if (yellowFlag[0] && yellowFlag[1] && yellowFlag[2]){
-    Serial.println("It is yellow");
+    Serial.println("It is Yellow");
   }else{
     Serial.println("UNKNOWN");
   }
@@ -438,7 +439,7 @@ void Wheels()
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
   }
-  else if (purpFlag == true){
+  else if (purpFlag || yellowFlag == true){
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
   digitalWrite(In3, LOW);
@@ -450,7 +451,7 @@ void Wheels()
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
   }
-  else if (yellowFlag == true){
+  else if (purpFlag || yellowFlag == true){
   digitalWrite(In1, LOW);
   digitalWrite(In2, LOW);
   digitalWrite(In3, HIGH);
