@@ -439,7 +439,7 @@ void Wheels()
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
   }
-  else if (purpFlag || yellowFlag == true){
+  else if (yellowFlag == true){
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
   digitalWrite(In3, LOW);
@@ -451,7 +451,7 @@ void Wheels()
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
   }
-  else if (purpFlag || yellowFlag == true){
+  else if (purpFlag == true){
   digitalWrite(In1, LOW);
   digitalWrite(In2, LOW);
   digitalWrite(In3, HIGH);
