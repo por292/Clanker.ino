@@ -24,12 +24,12 @@ bool blackFlag[] = {false, false, false};
 int frequencyB = 0;
 int differenceB = 0;
 //purple
-int purp[] = {0, 0, 0};
+int purp[] = {110, 150, 110};
 bool purpFlag[] = {false, false, false};
 int frequencyC = 0;
 int differenceC = 0;
 //yellow
-int yellow[] = {0, 0, 0};
+int yellow[] = {33, 53, 61};
 bool yellowFlag[] = {false, false, false};
 int frequencyD = 0;
 int differenceD = 0;
