@@ -24,7 +24,7 @@ bool blackFlag[] = {false, false, false};
 int frequencyB = 0;
 int differenceB = 0;
 //purple
-int purp[] = {110, 150, 110};
+int purp[] = {90, 110, 75};
 bool purpFlag[] = {false, false, false};
 int frequencyC = 0;
 int differenceC = 0;
