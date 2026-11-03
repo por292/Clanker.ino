@@ -87,23 +87,22 @@ void setup() {
   pinMode(In3, OUTPUT);
   pinMode(In4, OUTPUT);
 
-
   Serial.begin(9600);
 
 }
 
 void loop() { 
  //Claw();
- 
  //Clench();
- //Wheels();
+ Wheels();
  Line();
-StayOnTheLine();
-sensorfunc();
- //White();
- //Black();
- //Yellow();
- //Purple();
+ StayOnTheLine();
+ sensorfunc();
+ White();
+ Black();
+ Yellow();
+ Purple();
+
 }
 
 /*void Claw(){
@@ -123,29 +122,29 @@ sensorfunc();
 
 void StayOnTheLine(){
   uint16_t position = qtrA.readLineBlack(sensorValues);
-  if (position > 1200 && position < 1400){
+  if (position > 1300 && position < 1700){
     digitalWrite(In1, HIGH);
     digitalWrite(In3, LOW);
-    Serial.println("Moving Left 20ms");
-    Serial.println(position);
+   Serial.println("Moving Left 20ms");
+    //Serial.println(position);
     delay(20);
     digitalWrite(In1, LOW);
     digitalWrite(In3, LOW);
   }
 
-  if (position < 1200){
+  if (position < 1300){
     digitalWrite(In1, LOW);
     digitalWrite(In3, HIGH);
     Serial.println("Moving Right 20ms");
-    Serial.println(position);
+    //Serial.println(position);
     delay(20);
     digitalWrite(In1, LOW);
     digitalWrite(In3, LOW);
   }
-  if (position > 1400){
+  if (position > 1700){
     digitalWrite(In1, LOW);
     digitalWrite(In3, LOW);
-    Serial.println(position);
+    //Serial.println(position);
     Serial.println("On The Line");
   }
 
@@ -275,7 +274,6 @@ void White()
   //Serial.println("  ");
   
 }
-
 
 void Black(){
 
