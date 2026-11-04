@@ -5,8 +5,6 @@ Servo myservo;  // create servo object to control a servo
 Servo myservo1;
 
 
-
-
 #define S0 3
 #define S1 4
 #define S2 7
@@ -98,8 +96,8 @@ void loop() {
  Line();
  StayOnTheLine();
  sensorfunc();
- White();
- Black();
+ //White();
+ //Black();
  Yellow();
  Purple();
 
@@ -122,10 +120,10 @@ void loop() {
 
 void StayOnTheLine(){
   uint16_t position = qtrA.readLineBlack(sensorValues);
-  if (position > 1300 && position < 1700){
-    digitalWrite(In1, HIGH);
-    digitalWrite(In3, LOW);
-   Serial.println("Moving Left 20ms");
+  if (position > 1300 && position < 1600){
+    digitalWrite(In1, LOW);
+    digitalWrite(In3, HIGH);
+   Serial.println("Moving Right 20ms");
     //Serial.println(position);
     delay(20);
     digitalWrite(In1, LOW);
@@ -133,17 +131,17 @@ void StayOnTheLine(){
   }
 
   if (position < 1300){
-    digitalWrite(In1, LOW);
-    digitalWrite(In3, HIGH);
-    Serial.println("Moving Right 20ms");
+    digitalWrite(In1, HIGH);
+    digitalWrite(In3, LOW);
+    Serial.println("Moving Left 20ms");
     //Serial.println(position);
     delay(20);
     digitalWrite(In1, LOW);
     digitalWrite(In3, LOW);
   }
-  if (position > 1700){
-    digitalWrite(In1, LOW);
-    digitalWrite(In3, LOW);
+  if (position > 1600){
+    digitalWrite(In1, HIGH);
+    digitalWrite(In3, HIGH);
     //Serial.println(position);
     Serial.println("On The Line");
   }
