@@ -46,6 +46,8 @@ const int In1 = A4;
 const int In2 = A5;
 const int In3 = 2;
 const int In4 = 13;
+const int EnA = 9;
+const int EnB = 11;
 
 const uint8_t SensorCount = 4;
 uint16_t sensorValues[SensorCount];
