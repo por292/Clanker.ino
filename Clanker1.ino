@@ -48,7 +48,6 @@ const int In3 = 2;
 const int In4 = 13;
 const int EnA = 9;
 const int EnB = 11;
-
 const uint8_t SensorCount = 4;
 uint16_t sensorValues[SensorCount];
 
@@ -98,8 +97,8 @@ void loop() {
  Line();
  StayOnTheLine();
  sensorfunc();
- //White();
- //Black();
+ White();
+ Black();
  Yellow();
  Purple();
 
@@ -125,8 +124,8 @@ void StayOnTheLine(){
   if (position > 1300 && position < 1600){
     digitalWrite(In1, LOW);
     digitalWrite(In3, HIGH);
-   Serial.println("Moving Right 20ms");
-    //Serial.println(position);
+    Serial.println("Moving Right 20ms");
+    analogWrite(EnB,150);
     delay(20);
     digitalWrite(In1, LOW);
     digitalWrite(In3, LOW);
@@ -135,8 +134,8 @@ void StayOnTheLine(){
   if (position < 1300){
     digitalWrite(In1, HIGH);
     digitalWrite(In3, LOW);
+    analogWrite(EnA, 170);
     Serial.println("Moving Left 20ms");
-    //Serial.println(position);
     delay(20);
     digitalWrite(In1, LOW);
     digitalWrite(In3, LOW);
@@ -144,7 +143,8 @@ void StayOnTheLine(){
   if (position > 1600){
     digitalWrite(In1, HIGH);
     digitalWrite(In3, HIGH);
-    //Serial.println(position);
+    analogWrite(EnA, 170);
+    analogWrite(EnB,150);
     Serial.println("On The Line");
   }
 
@@ -440,26 +440,24 @@ void Wheels()
 {
   if (whiteFlag || blackFlag == true){
   digitalWrite(In1, HIGH);
-  digitalWrite(In2, LOW);
   digitalWrite(In3, HIGH);
-  digitalWrite(In4, LOW);
+  analogWrite(EnA, 250);
+  analogWrite(EnB, 250);
   }
   else if (yellowFlag == true){
   digitalWrite(In1, HIGH);
-  digitalWrite(In2, LOW);
   digitalWrite(In3, LOW);
-  digitalWrite(In4, LOW);
+  analogWrite(EnA, 250);
   }
   if(whiteFlag || blackFlag == true){
-  digitalWrite(In3, HIGH);
-  digitalWrite(In4, LOW);
   digitalWrite(In1, HIGH);
-  digitalWrite(In2, LOW);
+  digitalWrite(In3, HIGH);
+  analogWrite(EnA, 250);
+  analogWrite(EnB, 250);
   }
   else if (purpFlag == true){
   digitalWrite(In1, LOW);
-  digitalWrite(In2, LOW);
   digitalWrite(In3, HIGH);
-  digitalWrite(In4, LOW);
+  analogWrite(EnB, 250);
   }
 }
